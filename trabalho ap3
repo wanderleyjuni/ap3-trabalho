@@ -1,0 +1,73 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// funcao para calcular a media
+float calculateAverage(float grade1, float grade2, float grade3) {
+    return (grade1 + grade2 + grade3) / 3;
+}
+
+// funcao para verificar a situacao do aluno
+string checkStatus(float average, float attendance) {
+    if (average >= 7.0 && attendance >= 75.0) {
+        return "Aprovado";
+    } else if (average >= 7.0 && attendance < 75.0) {
+        return "Aprovado com frequencia insuficiente";
+    } else if (average < 7.0 && attendance >= 75.0) {
+        return "Reprovado por media";
+    } else {
+        return "Reprovado por frequencia";
+    }
+}
+
+int main() {
+    int numberOfStudents;
+
+    // numero de estudantes
+    cout << "Numero de estudantes: ";
+    cin >> numberOfStudents;
+
+    // Vetores para armazenar as notas, frequências e situações dos alunos
+    vector<string> names(numberOfStudents);
+    vector<float> grades1(numberOfStudents), grades2(numberOfStudents), grades3(numberOfStudents), attendances(numberOfStudents);
+    vector<float> averages(numberOfStudents);
+    vector<string> statuses(numberOfStudents);
+
+     // Entrada de dados dos alunos
+    for (int i = 0; i < numberOfStudents; i++) {
+        cout << "\nStudent " << i + 1 << endl;
+        cout << "Name: ";
+        cin.ignore(); // Clear keyboard buffer
+        getline(cin, names[i]);
+
+        cout << "Grade 1: ";
+        cin >> grades1[i];
+
+        cout << "Grade 2: ";
+        cin >> grades2[i];
+
+        cout << "Grade 3: ";
+        cin >> grades3[i];
+
+        cout << "Attendance (%): ";
+        cin >> attendances[i];
+
+         // Calcula a média do aluno
+        averages[i] = calculateAverage(grades1[i], grades2[i], grades3[i]);
+
+       // Verifica a situação do aluno
+        statuses[i] = checkStatus(averages[i], attendances[i]);
+    }
+
+    // Exibe os resultados
+    cout << "\n\nRelatorio de situacao dos alunos:\n";
+    for (int i = 0; i < numberOfStudents; i++) {
+        cout << "\nStudent: " << names[i] << endl;
+        cout << "Average: " << averages[i] << endl;
+        cout << "Attendance: " << attendances[i] << "%" << endl;
+        cout << "Status: " << statuses[i] << endl;
+    }
+
+    return 0;
+}
